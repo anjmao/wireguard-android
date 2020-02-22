@@ -15,3 +15,8 @@ android {
         }
     }
 }
+
+dependencies {
+    implementation project(":config")
+    implementation "androidx.annotation:annotation:$annotationsVersion"
+}
