@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 
 import com.wireguard.android.Application;
 import com.wireguard.android.R;
+import com.wireguard.android.backend.BackendException;
 import com.wireguard.config.BadConfigException;
 import com.wireguard.config.BadConfigException.Location;
 import com.wireguard.config.BadConfigException.Reason;
@@ -53,6 +54,14 @@ public final class ErrorMessages {
             InetNetwork.class, R.string.parse_error_inet_network,
             Integer.class, R.string.parse_error_integer
     );
+    private static final Map<BackendException.Reason, Integer> BE_REASON_MAP = new EnumMap<>(Maps.of(
+            BackendException.Reason.MULTIPLE_TUNNELS, R.string.multiple_tunnels_error,
+            BackendException.Reason.NO_CONFIG, R.string.no_config_error,
+            BackendException.Reason.TUN_CREATE_ERROR, R.string.tun_create_error,
+            BackendException.Reason.TUNNEL_ON_ERROR, R.string.tunnel_on_error,
+            BackendException.Reason.VPN_NOT_AUTHORIZED, R.string.vpn_not_authorized_error,
+            BackendException.Reason.VPN_START_ERROR, R.string.vpn_start_error
+    ));
 
     private ErrorMessages() {
         // Prevent instantiation
