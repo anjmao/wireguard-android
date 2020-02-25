@@ -37,6 +37,7 @@ import com.wireguard.android.databinding.ObservableKeyedRecyclerViewAdapter;
 import com.wireguard.android.databinding.TunnelListFragmentBinding;
 import com.wireguard.android.databinding.TunnelListItemBinding;
 import com.wireguard.android.model.Tunnel;
+import com.wireguard.android.ui.EdgeToEdge;
 import com.wireguard.android.util.ErrorMessages;
 import com.wireguard.android.widget.MultiselectableRelativeLayout;
 import com.wireguard.config.BadConfigException;
@@ -78,9 +79,7 @@ public class TunnelListFragment extends BaseFragment {
             Config.parse(new ByteArrayInputStream(configText.getBytes(StandardCharsets.UTF_8)));
 
             // Config text is valid, now create the tunnel…
-            final FragmentManager fragmentManager = getFragmentManager();
-            if (fragmentManager != null)
-                ConfigNamingDialogFragment.newInstance(configText).show(fragmentManager, null);
+            ConfigNamingDialogFragment.newInstance(configText).show(getParentFragmentManager(), null);
         } catch (final BadConfigException | IOException e) {
             onTunnelImportFinished(Collections.emptyList(), Collections.singletonList(e));
         }
@@ -219,9 +218,12 @@ public class TunnelListFragment extends BaseFragment {
         binding.createFab.setOnClickListener(v -> {
             final AddTunnelsSheet bottomSheet = new AddTunnelsSheet();
             bottomSheet.setTargetFragment(this, REQUEST_TARGET_FRAGMENT);
-            bottomSheet.show(requireFragmentManager(), "BOTTOM_SHEET");
+            bottomSheet.show(getParentFragmentManager(), "BOTTOM_SHEET");
         });
         binding.executePendingBindings();
+        EdgeToEdge.setUpRoot((ViewGroup) binding.getRoot());
+        EdgeToEdge.setUpFAB(binding.createFab);
+        EdgeToEdge.setUpScrollingContent(binding.tunnelList, binding.createFab);
         return binding.getRoot();
     }
 
