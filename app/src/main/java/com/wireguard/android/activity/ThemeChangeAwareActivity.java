@@ -38,7 +38,6 @@ public abstract class ThemeChangeAwareActivity extends AppCompatActivity impleme
     @Override
     public void onSharedPreferenceChanged(final SharedPreferences sharedPreferences, final String key) {
         if ("dark_theme".equals(key)) {
-            final boolean darkMode = sharedPreferences.getBoolean(key, false);
             AppCompatDelegate.setDefaultNightMode(
                     sharedPreferences.getBoolean(key, false) ?
                             AppCompatDelegate.MODE_NIGHT_YES :
